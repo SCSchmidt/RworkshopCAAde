@@ -1,0 +1,35 @@
+---
+title: "Skript R Workshop @ CAA de 2019"
+author: "Sophie C. Schmidt"
+date: "4 September 2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Einführung
+
+1. Warum R?
+2. Ziele							      15min
+
+## 3. Einführung in die Grundlagen			
+1. Paketstruktur
+2. Objektorientierte Sprache
+3. class							20min
+
+## Ins kalte Wasser!
+1. Taschenrechner					5mnin
+2. Variablen zuweisen und benutzen			10min
+3. archdata – Einführung				10min
+4. Lagemaße, nrow u. ä.					15Min
+Pause							15min
+5. ggplot2						45min
+6. Daten umformen					15min
+5. Hilfestellungen					      15min
+1. Hilfe-Funktion in R
+2. Ben Marwicks page
+3. Data Science Buch
+4. YARRR 
+5. google-tips
