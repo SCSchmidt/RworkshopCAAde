@@ -42,11 +42,11 @@ Die Funktionen sind in Paketen gespeichert, die sich auf einander beziehen: Wenn
 
 Man kann in R auch selber Funktionen schreiben, das führt für den Workshop aber zu weit. 
 
-Funktionen erkennt man daran, dass hinter dem Funktionsbefehl oder -namen in runden Klammern die Objekte stehen, auf die die Funktion angewandt wird. z. B.: 
+Funktionen erkennt man daran, dass hinter dem Funktionsbefehl oder -namen in runden Klammern die Objekte stehen, auf die die Funktion angewandt wird sowie Parameter, wie diese Funktion angewandt werden soll. Ein einfaches Beispiel: 
 
 mean(x)
 
---> mean ist der Funktionsname, auf x wird die Funktion ausgeführt.
+--> "mean" ist der Funktionsname, auf x wird die Funktion ausgeführt.
 
 Was könnte x, können Objekte sein? 
 (Tatsächlich können Funktionen auch als Objekte behandelt werden)
@@ -247,7 +247,7 @@ Nunja, zumindest Minimal- und Maximalwerte, Median, Mittelwert und Quantile lass
 
 ### Bestimmte Bereiche eines Datensatzes auswählen
 
-- Eckige Klammern []: Sie sind spannend, weil man mit ihnen Zeilen, Spalten und Felder eines Dataframes anwählen kann. Ein kleines Beispiel:
+- Eckige Klammern [ ]: Sie sind spannend, weil man mit ihnen Zeilen, Spalten und Felder eines Dataframes anwählen kann. Ein kleines Beispiel:
 
 Will ich in dem Datensatz BACups zB die allererste Information (1. Zeile, 1. Spalte, was steht da?) herausholen, geht das so:
 
@@ -314,7 +314,7 @@ mean(BACups_proto$RD)
 
 Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "pipe". Mit dem Befehl %>% wird das Ergebnis einer Zeile in die nächste überführt. 
 
-Im Beispiel schicke ich damit den gesamten Datensatz BACups in den Filter, der in der nächsten Zeile beschrieben wird, "filtere" ihn und schick ihn gefiltert weiter in die nächste Zeile:
+Im Beispiel schicke ich damit den gesamten Datensatz BACups in den Filter, der in der nächsten Zeile beschrieben wird, "filtere" ihn und schick ihn gefiltert weiter in die nächste Zeile, in der ich die Spalte definiere und in die letzte, wo es dann um die Berechnung des Mittelwertes geht:
 
 ```{r}
 # filter funktion
@@ -329,22 +329,43 @@ BACups %>%
 
 ```
 
-Wie man sieht, ist der "Kernbefehl" (" Phase == "Protoapennine" ") fast genau gleich wie bei der subset-Funktion. Es sind auch nicht weniger Zeilen Code. Es ist aber eventuell lesbarer. Und wenn ich mir vorstelle, dass ich meine Daten vllt noch nach 20 anderen Variablen filtern möchte, will ich nicht jedesmal einen extra Datensatz erstellen müssen. Brauche ich diese Datensätze aber vllt noch für andere Berechnungen, ist subset die bessere Lösung. 
+Wie man sieht, ist der "Kernbefehl" (" Phase == "Protoapennine" ") fast genau gleich wie bei der subset-Funktion. Es sind auch nicht weniger Zeilen Code. Es ist aber eventuell lesbarer. Und wenn ich mir vorstelle, dass ich meine Daten vllt noch nach 20 anderen Variablen filtern möchte, will ich nicht jedesmal einen extra Datensatz erstellen müssen. Manchmal wird es dann schwierig, sich sinnvolle Namen für die Datensätze auszudenken. So sehe ich immer, welche Filter ich genau angewandt habe. Allerdings: Brauche ich diese Datensätze noch für andere Berechnungen, ist subset die bessere Lösung. Oder ich weise das gefilterte einer Variablen zu, das geht auch:
+
+```{r}
+BACups_protapp <- BACups %>%
+  filter(Phase == "Protoapennine")
+```
+
 
 Beides funktioniert gleichermaßen gut.
 
 # Pause							15min
 
+Jetzt geht es um die Erstellung von Graphen. Hier gibt es tausende von Möglichkeiten und es werden immer mehr entwickelt. 
+
+In base hat R sehr einfache Funktionen, mit denen man sehr schnell gute funktionale Graphiken erstellen kann:
+
+```{r}
+hist(BACups$RD)
+```
+
+Allerdings sind diese Graphiken nicht so elegant und ich selber arbeite mit ggplot: 
 
 ## ggplot
- 
-ggplot wurde von Hadley Wickham entwickelt, ist ein Paket mit vielen Funktionen zur Visualisierung von Daten und folgt einer "Grammatik der Diagramme".
+
+ggplot2 ist ein Paket, dase von Hadley Wickham entwickelt wurde, und viele Funktionen zur Visualisierung von Daten bietet. Es folgt einer eigenen Logik, der "Grammatik der Diagramme".
 
 Erarbeiten wir uns das Schritt für Schritt.
 
-Wir müssen dem Programm sagen: Welche Daten es benutzen soll (data = ), welche Art von Diagramm es bauen soll (geom_xxx) und wie das Diagramm aussehen soll (aes von aesthetics), damit überhaupt etwas entsteht.
+3 Dinge gibt es in jedem ggplot, die definiert werden müssen:
 
-Alles andere danach sind reine Verschönerungsmaßnahmen. ;-)
+- Welche Daten es benutzen soll (data = ), 
+
+- welche Art von Diagramm es bauen soll (geom_xxx) und 
+
+- wie das Diagramm aussehen soll (aes von aesthetics), damit überhaupt etwas entsteht.
+
+Alles andere danach sind reine Verschönerungsmaßnahmen. 
 
 
 
@@ -363,11 +384,7 @@ Jetzt aber zu den Diagrammen. Es geht im Folgenden um
 
 - Liniendiagramme
 
-- Dichtediagramme
-
 - Facettierungen
-
-- geom_raster
 
 - ggplot-Hilfen
 
@@ -409,7 +426,7 @@ ggplot(data = BACups)+ #data = bezieht sich auf den Datensatz mit dem ich arbeit
   labs(y = "Häufigkeit",
        title = "Vorkommen der zwei Phasen")+
   theme_bw() 
-  
+
 ```
 
 
@@ -511,7 +528,7 @@ Bornholm %>%
   ggplot()+
   geom_point(aes(x = Period, y = Haeufigkeit, color = Typ))+
   geom_line(aes(x = Period, y = Haeufigkeit, color = Typ, group = Typ))
-                 
+
 # Nach tidyverse-Logik ist das leichter zu lesen. Was denkt ihr?
 
 ```
@@ -598,49 +615,6 @@ Welche Auswahlen jedoch archäologisch relevant ist, entscheidet ihr als Expert*
 Jetzt reicht es aber auch langsam mit den Liniendiagrammen, machen wir doch mal was mit Dichte.
 
 
-## Dichtediagramme!
-
-Wie die funktionieren, habt ihr hoffentlich  gelesen.
-
-
-Bei Dichtediagrammen wird die x-Achse wieder metrisch. Das geht also NICHT mit den Periodenangaben, mit denen wir die ganze Zeit eben rumgespielt haben. 
-
-Wir könne stattdessen wieder mit den Bronzezeitlichen Tassen arbeiten.
-
-Die Funktion in R heißt density.
-```{r dichte}
-ggplot(data = BACups)+
-  geom_density(aes(x = RD))
-  
-```
-Das war doch ganz einfach. Aber jetzt möchte ich gern die unterschiedlichen Messungen an den Tassen im Vergleich sehen.
-
-```{r density mehrere, fig.height= 8, fig.width = 8}
-# Ich kann ganz einfach den geom_density-Befehl mehrmals rufen
-
-ggplot(data = BACups)+
-  geom_density(aes(x = RD, col ="Randdurchmesser"))+
-  geom_density(aes(x = ND, col = "Nackendurchmesser"))+
-  geom_density(aes(x = SD, col = "Schulterdurchmesser"))
-
-```
-Das funktioniert zwar, aber es ist nicht gerade "elegant".
-
-Elegant wär es, erst die Daten so umzuformen, dass sich in ggplot dann mit möglichst wenig Befehlen meine Grafik darstellen lassen kann.
-
-Wir brauchen also wieder die Umformungen mit tidyr. Der Schritt ist relativ einfach. Ich nehm die Spalten, die mich interessieren sortiere die Werte dieser Spalten neu, so dass ich eine Spalte habe, in der steht die ehemalige Überschrift der Spalte und einen Spalte, in der der dazugehörige Wert steht. Das ist wieder der gather-Befehl.
-
-```{r density daten tidy, fig.height= 8, fig.width = 8}
-
-BACups%>%
-  gather(key = "Durchmesser", value = "Wert", "RD", "ND","SD") %>%
-  ggplot()+
-  geom_density(aes(x = Wert, col= Durchmesser))
-
-# genauso viele Zeilen Code aber schicker.
-```
-
-
 
 ## Facettierung!
 
@@ -665,7 +639,7 @@ data("Snodgrass")
 
 ggplot(data = Snodgrass)+
   geom_point(aes(x = Width, y = Length, col= Discs , shape = as.character(Effigies), size = Ceramics))+
-             facet_grid(Inside~Segment)
+  facet_grid(Inside~Segment)
 # Was passiert hier alles?
 ```
 
