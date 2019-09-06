@@ -343,7 +343,7 @@ Beides funktioniert gleichermaßen gut.
 
 Jetzt geht es um die Erstellung von Graphen. Hier gibt es tausende von Möglichkeiten und es werden immer mehr entwickelt. 
 
-In base hat R sehr einfache Funktionen, mit denen man sehr schnell gute funktionale Graphiken erstellen kann:
+In base hat R sehr einfache Funktionen, mit denen man sehr schnell gute funktionale Graphiken erstellen kann, z. B.:
 
 ```{r}
 hist(BACups$RD)
@@ -353,82 +353,77 @@ Allerdings sind diese Graphiken nicht so elegant und ich selber arbeite mit ggpl
 
 ## ggplot
 
-ggplot2 ist ein Paket, dase von Hadley Wickham entwickelt wurde, und viele Funktionen zur Visualisierung von Daten bietet. Es folgt einer eigenen Logik, der "Grammatik der Diagramme".
+ggplot2 ist ein Paket, dase von Hadley Wickham entwickelt wurde, und viele Funktionen zur Visualisierung von Daten bietet (für eine Übersicht und Inspirationen siehe z. B: http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html und https://www.r-graph-gallery.com/). Es folgt einer eigenen Logik, der "Grammatik der Diagramme" und gehört zum Tidyverse.
 
 Erarbeiten wir uns das Schritt für Schritt.
 
 3 Dinge gibt es in jedem ggplot, die definiert werden müssen:
 
-- Welche Daten es benutzen soll (data = ), 
+- Welche Daten es benutzen soll ggplot(data = ), 
 
-- welche Art von Diagramm es bauen soll (geom_xxx) und 
+- welche Art von Diagramm es bauen soll (geom) und 
 
-- wie das Diagramm aussehen soll (aes von aesthetics), damit überhaupt etwas entsteht.
+- wie das Diagramm aussehen soll (aes() von aesthetics), damit überhaupt etwas entsteht.
 
-Alles andere danach sind reine Verschönerungsmaßnahmen. 
+Alles andere danach sind reine Verschönerungsmaßnahmen. Mit "scales" lassen sich die Achsen und Legenden verändern, mit "theme" Hintergrundfarbe u. ä. (für mehr Infos siehe:  https://r-intro.tadaa-data.de/book/visualisierung.html )
 
+Nehmen wir uns ein Beispiel vor und erarbeiten es uns der Reihe nach.
 
-
-## ggplot- Logik!
-
-Zur Wiederholung empfehle ich folgenden  Link: https://r-intro.tadaa-data.de/book/visualisierung.html 
-Ja, ich bin zu faul um das abzutippen. Gleichzeitig lernt ihr so aber auch eine weitere gute Ressource kennen, die auf R auf deutsch erklärt und frei zugänglich ist. 
-
-
-
-Auf zu den Diagrammtypen jetzt:
-
-Jetzt aber zu den Diagrammen. Es geht im Folgenden um
-
-- Säulendiagramme
-
-- Liniendiagramme
-
-- Facettierungen
-
-- ggplot-Hilfen
 
 # ein Säulendiagramm
 Ein Säulendiagramm eignet sich zur Darstellung nominaler und ordinaler Variablen. Ihr könnt es ja mal mit metrischen Probieren, dann seht ihr schnell, warum das nicht gut ist.
 
-```{r erstes Säulendiagramm}
+Als erstes müssen wir das Paket ggplot2 aufrufen
+```{r}
 library(ggplot2)
-ggplot(data = BACups)+ #data = bezieht sich auf den Datensatz mit dem ich arbeite, meist ein dataframe
-  geom_bar(aes(x = Phase)) #geom_bar bedeutet, ich hätte gern ein Balkendiagramm, aesthetic: ich will, dass auf der X-Achse die Phasen abgetragen werden
 ```
 
-Jetzt kann man viele Dinge verschönern
+Dann bauen wir ein erstes einfaches Säulendiagramm. Der Befehl für diese Art des Diagramms ist "geom_bar". 
 
-z. B. Den Achsen eine andere Beschriftung geben:
+Die Information "data = " kann entweder direkt in die runden Klammern hinter ggplot() geschrieben werden ODER dem geom_bar hinzugefügt. 
+
+Wie aber soll das Säulendiagramm (geom_bar) aussehen, welche Spalte des Datensatzes soll genau wie dargestellt werden? Das ist die Information die in aes() eingegeben werden muss.
+
+Wir möchten jetzt also ein Säulendiagramm bauen, dass auf der x-Achse die verschiedenen Phasen des BACups-Datensatzes und die Häufigkeiten (wie viele Datensätze aus den verschiedenen Phasen gibt es) auf der y-Achse zeigt:
+
+```{r}
+ggplot()+ 
+  geom_bar(data = BACups, aes(x = Phase)) 
+```
+
+Das + am Ende jeder Zeile sagt R, dass der Befehl in der nächsten Zeile weiter geht. 
+
+Das ist doch schonmal was. Die Information die wir wollen, wird schnell und einfach angezeigt. 
+
+Aber schön ist es noch nicht.
+
+Geben wir den Achsen eine andere Beschriftung. Mit dem "labs"-Befehl lassen sich die Achsenbeschriftungen und die Überschriften ändern:
 ```{r erstes Säulendiagramm mit Achsen-Titel}
-ggplot(data = BACups)+ 
-  geom_bar(aes(x = Phase))+
-  labs(y = "Häufigkeit", #der y-Achse einen neuen Namen geben
-       title = "Vorkommen der zwei Phasen") # dem ganzen Plot eine Überschrift geben
+ggplot()+ 
+  geom_bar(data = BACups, aes(x = Phase))+
+  labs(y = "Häufigkeit",
+       title = "Vorkommen der zwei Phasen")
 ```
 
-Oder einen anderen Look wählen (ein anderes Thema):
+Oder die Säulen bunt einfärben. Der Befehl fill gibt den Balken unterschiedliche Farben, je nach den Angaben in der Spalte, die ich spezifiziere (hier wieder Phase):
+
+```{r erstes Säulendiagramm und jetzt bunt!}
+ggplot()+ 
+  geom_bar(data = BACups, aes(x = Phase, fill = Phase))+
+  labs(y = "Häufigkeit",
+       title = "Vorkommen der zwei Phasen")
+
+```
+
+Oder einen anderen Look wählen (ein anderes Thema. Es gibt theme_classic, theme_grey, theme_minimal und theme_bw): 
 
 ```{r erstes Säulendiagramm mit anderem Thema}
 ggplot(data = BACups)+ 
-  geom_bar(aes(x = Phase))+ 
+  geom_bar(aes(x = Phase, fill = Phase))+ 
   labs(y = "Häufigkeit",
        title = "Vorkommen der zwei Phasen")+
-  theme_bw() #theme_classic, theme_grey, theme_minimal
+  theme_bw()
 ```
-
-
-Oder die Säulen bunt einfärben:
-
-```{r erstes Säulendiagramm und jetzt bunt!}
-ggplot(data = BACups)+ #data = bezieht sich auf den Datensatz mit dem ich arbeite, meist ein dataframe
-  geom_bar(aes(x = Phase, fill = Phase))+ # fill gibt den Balken unterschiedliche Farben, je nach den Angaben in der Spalte Phase
-  labs(y = "Häufigkeit",
-       title = "Vorkommen der zwei Phasen")+
-  theme_bw() 
-
-```
-
 
 
 EXTRA Aufgabe:
@@ -447,6 +442,102 @@ ggplot(data = EndScrapers)+
 ```
 
 
+
+# Streudiagramme
+
+Bei Streudiagrammen kann ich zwei Variablen einer Einheit gegeneinander plotten.
+
+Wir tragen auf der X- und auf der Y-Achse metrische Daten ab. Das gehört zu den aesthetics-Elementen, deshalb tun wir die Info in die Klammern hinter aes(): 
+
+```{r Streudiagramm basics}
+
+ggplot(data = BACups)+
+  geom_point(aes(x = RD, y = ND))
+
+```
+
+Jetzt können wir damit wieder die Dinge tun, die wir mit dem Balkendiagramm gemacht hatten, also die Achsen beschriften, einen Titel vergeben und den Style ändern:
+
+```{r Streudiagramm mit Titel, mit x- und y-Achsenbeschriftung}
+ggplot(data = BACups)+
+  geom_point(aes(x = RD, y = ND)) + 
+  labs(x =" Randdurchmesser",
+       y ="Nackendurchmesser",
+       title = "Rand- und Nackendurchmesserim Verhältnis zueinander")+
+  theme_bw()
+
+```
+
+Was kann man noch tolles machen? Die Form der Punkte von einer Variablen bestimmen lassen! 
+Und die Farbe! 
+
+Welches Merkmal, das ich in der Tabelle als Spalte aufgenommen habe die Form der Punkte bestimmt lege ich mit "shape" fest, die Farbe mit "color".
+
+
+```{r Streudiagramm mit schönen Punkten, fig.height=5, fig.width=5}
+
+ggplot(data = BACups)+
+  geom_point(aes(x = H, y = SD, shape = Phase, color = Phase)) + 
+  labs(x =" Höhe des Gefäßes",
+       y ="Schulterdurchmesser",
+       title = "Höhe des Gefäßes im Verhältnis zum Schulterdurchmesser")+
+  theme_bw()
+
+```
+
+Oooooh, schaut euch mal das Ergebnis an! 
+Da könnte man schon fast was interpretieren! 
+
+Probiert doch einmal noch 2-3 andere Parameter aus, ob die vielleicht auch einen Unterschied zwischen den zwei Phasen erkennen lassen?
+
+
+
+Form und Farbe kann man natürlich auch von unterschiedlichen Parametern bestimmen lassen. Da diese Eigenschaften jedoch nominaler Art sein müssen und wir keinen zweiten nominale Variable in dem BACups-Datensatz haben, benutzen wir doch mal einen anderen.
+
+```{r Streudiagramm mit anderem Bsp, fig.height=5, fig.width=5}
+data("Snodgrass")
+
+
+ggplot(data = Snodgrass)+
+  geom_point(aes(x = Width, y = Length, shape = Segment, color = Inside))+ 
+  labs(x =" Breite des Hauses",
+       y ="Länge des Hauses",
+       title = "Häuser in Snodgrass")+
+  theme_bw()
+
+```
+
+Hmmmhh, interessant. Aber ich vermute, der normale Leser des Diagramms kann nicht erkennen, was "Inside" für eine Information beinhaltet.
+Kann man vllt die Beschriftung der Legende ändern?
+
+Man kann!!
+
+```{r Streudiagramm Legendenbeschriftung, fig.height=5, fig.width=5}
+
+ggplot(data = Snodgrass)+
+  geom_point(aes(x = Width, y = Length, shape = Segment, color = Inside))+ 
+  labs(x =" Breite des Hauses",
+       y ="Länge des Hauses",
+       title = "Häuser in Snodgrass")+
+  theme_bw()+
+ scale_colour_discrete(name  ="Innerhalb der Mauer oder nicht",
+                            breaks=c("Inside","Outside"),
+                            labels=c("innerhalb", "außerhalb")) +
+    scale_shape_discrete(name  ="Grabungsareal",
+                           breaks=c("1","2","3"),
+                           labels=c("Areal 1", "Areal 2", "Areal 3"))
+```
+Was beudetet das alles?
+
+Mit scale_colour_discrete kann ich Legenden (scales) verändern, die mit "color" innerhalb des aesthetics-Bereichs meines Codes für die Graphik definiert werden und die DISKRET sind (also v.a. nominale / ordinale Daten).
+
+Hier benenne ich den Legendentitel mit "Name = " um.
+
+"breaks" bezeichnet die Werte in meiner Spalte, die dann mit den "labels" in der nächsten Zeile umbenannt werden.
+
+Das gleiche kann ich mit der Legende für die FORM der Punkte machen: scale_shape_discrete.
+
+Voll gut! Dann lernen wir doch noch andere Visualisierungsmöglichkeiten kennen.
 
 
 
@@ -644,7 +735,6 @@ ggplot(data = Snodgrass)+
 ```
 
 
-6. Daten umformen					15min
 
 ## eigene Daten einladen
 
