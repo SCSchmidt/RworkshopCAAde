@@ -312,12 +312,13 @@ mean(BACups_proto$RD)
 
 2. filter
 
-Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "pipe". Mit dem Befehl %>% (das ist das Rohr [manche übersetzen es mit Pfeife, wieso auch immer, Rohr ist viel sinniger]) wird das Ergebnis einer Zeile in die nächste überführt. 
+Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "pipe". Mit dem Befehl %>% wird das Ergebnis einer Zeile in die nächste überführt. 
 
 Im Beispiel schicke ich damit den gesamten Datensatz BACups in den Filter, der in der nächsten Zeile beschrieben wird, "filtere" ihn und schick ihn gefiltert weiter in die nächste Zeile:
 
 ```{r}
-library(tidyverse)
+# filter funktion
+library(dplyr)
 # zur Vereinfachung der Pipe gibt es 
 library(magrittr)
 
@@ -326,11 +327,6 @@ BACups %>%
   use_series(RD) %>%    # das sagt, nimm die Spalte RD, braucht Paket magrittr
   mean()
 
-## ohne magrittr  
-#BACups %>%
-#  filter(Phase == "Protoapennine") %>%
-#  `$`("RD") %>%
-#  mean()
 ```
 
 Wie man sieht, ist der "Kernbefehl" (" Phase == "Protoapennine" ") fast genau gleich wie bei der subset-Funktion. Es sind auch nicht weniger Zeilen Code. Es ist aber eventuell lesbarer. Und wenn ich mir vorstelle, dass ich meine Daten vllt noch nach 20 anderen Variablen filtern möchte, will ich nicht jedesmal einen extra Datensatz erstellen müssen. Brauche ich diese Datensätze aber vllt noch für andere Berechnungen, ist subset die bessere Lösung. 
