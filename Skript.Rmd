@@ -464,7 +464,7 @@ ggplot(data = BACups)+
   labs(x =" Randdurchmesser",
        y ="Nackendurchmesser",
        title = "Rand- und Nackendurchmesserim Verhältnis zueinander")+
-  theme_bw()
+  theme_classic()
 
 ```
 
@@ -487,9 +487,6 @@ ggplot(data = BACups)+
 
 Oooooh, schaut euch mal das Ergebnis an! 
 Da könnte man schon fast was interpretieren! 
-
-Probiert doch einmal noch 2-3 andere Parameter aus, ob die vielleicht auch einen Unterschied zwischen den zwei Phasen erkennen lassen?
-
 
 
 Form und Farbe kann man natürlich auch von unterschiedlichen Parametern bestimmen lassen. Da diese Eigenschaften jedoch nominaler Art sein müssen und wir keinen zweiten nominale Variable in dem BACups-Datensatz haben, benutzen wir doch mal einen anderen.
@@ -527,11 +524,11 @@ ggplot(data = Snodgrass)+
                            breaks=c("1","2","3"),
                            labels=c("Areal 1", "Areal 2", "Areal 3"))
 ```
-Was beudetet das alles?
+Was bedeutet das alles?
 
 Mit scale_colour_discrete kann ich Legenden (scales) verändern, die mit "color" innerhalb des aesthetics-Bereichs meines Codes für die Graphik definiert werden und die DISKRET sind (also v.a. nominale / ordinale Daten).
 
-Hier benenne ich den Legendentitel mit "Name = " um.
+Hier benenne ich den Legendentitel mit "name = " um.
 
 "breaks" bezeichnet die Werte in meiner Spalte, die dann mit den "labels" in der nächsten Zeile umbenannt werden.
 
