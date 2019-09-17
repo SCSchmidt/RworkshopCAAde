@@ -771,3 +771,4 @@ dazu:
 3. Data Science Buch
 4. YARRR 
 5. google-tips
+6. seekr.org
