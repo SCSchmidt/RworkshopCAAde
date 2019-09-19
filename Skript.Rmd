@@ -358,7 +358,7 @@ BACups_protapp <- BACups %>%
 ```
 
 
-## Funktionen schreiben
+## Option: Funktionen schreiben (falls vor der Pause noch Zeit ist)
 
 Wir haben jetzt schon Funktionen angewandt. Man kann sich in R aber auch Funktionen selber definieren. Die Syntax dafür ist immer gleich:
 
@@ -386,6 +386,9 @@ Es heißt, wenn man eine Abfolge von Berechnungen mehr als 3mal benutzt, sollte 
 
 
 Beides funktioniert gleichermaßen gut.
+
+
+### Option: Schleife schreiben
 
 # Pause							15min
 
@@ -654,27 +657,6 @@ Hilfen, um mit ggplot zurechtzukommen sind:
 
 
 
-## weitere spannende Dinge in R:
-
-Mit R kann man auch alle möglichen räumlichen Analysen machen. Man kann shape-files und raster-Daten bearbeiten. Ein kleines Beispiel, wie man eine einfache Karte plotten kann, lässt sich an dem Snodgrass-Datensatz zeigen
-
-```{r}
-ggplot()+
-  geom_point(data = Snodgrass, aes(x = East, y = South))
-```
-
-
-
-- Rmarkdown: Text und Code in einem Dokument
-dazu:
-- The Definitive Guide: https://bookdown.org/yihui/rmarkdown/
-- offizielle website: https://rmarkdown.rstudio.com/index.html
-
-- sp, sf, spatstat, maptools: Pakete für räumliche Analysen
-
-- rrtools: Projekt als R-Paket abspeichern (Text, Code und Daten in einem)
-
-
 ## eigene Daten einladen
 
 Je nachdem, wie die eigenen Daten gespeichert sind, benötigt man unterschiedliche Funktionen in R. Was base-r am einfachsten kann, ist eine csv-Datei einladen. Der Befehl dafür heißt "read.csv2" (eine Weiterentwicklung von read.csv). Mit diesem Befehl können wir auch spezifizieren, mit welchem Zeichen die Spalten voneinander getrennt wurden. Im Beispiel gebe ich an, dass eine Semikolon-getrennte Tabelle ist. Außerdem ist es ein deutscher Datensatz und der Dezimaltrenner ist das Komma: 
@@ -694,12 +676,61 @@ mydata <- read.xlsx("Pfad/zur/Datei/meineDatei.xlsx", sheet = 1)
 
 
 
+## weitere spannende Dinge in R:
+
+
+### räumliche Analysen
+Mit R kann man auch alle möglichen räumlichen Analysen machen. Man kann shape-files und raster-Daten bearbeiten. Ein kleines Beispiel, wie man eine einfache Karte plotten kann, lässt sich an dem Arnhofen-Datensatz zeigen
+
+Man benötigt das Paket "spatstat". In dem Datensatz gibt es das Arbeitsgebiet (window) als Polygon, welches mit der Funktion *owin* zu dieser Art von Objekt übertragen wird. Ein point process pattern object besteht aus den x- und y-Daten sowie diesem window:
+
+
+```{r}
+library(spatstat)
+data("Arnhofen")
+
+# generate observation window object; note the polygonal outline.
+arnwin <- owin(poly=Arnhofen$window[, 1:2])	
+
+# generate point process pattern object from points and owin object
+app <- ppp(Arnhofen$points$x, Arnhofen$points$y, arnwin) 
+
+plot(app)
+```
+Die Daten sind so für geostatistische Analysen vorbereitet. Zum Beispiel für eine Kerndichteschätzung:
+
+```{r}
+plot(density.ppp(app))
+```
+
+
+- das wichtigste Buch in Zusammenhang mit spatstat: Baddeley, A., Rubak, E. and Turner, R. (2015) Spatial Point Patterns: Methodology and Applications with R. Chapman and Hall/CRC Press. 
+- weitere Pakete für räumliche Analysen sind z. B.: sp, sf, maptools
+
+
+### R Markdown
+
+Markdown ist eine Auszeichnungssprache, die so einfach ist, dass sie menschenlesbar bleibt. Dokumente in Markdown können mit unterschiedlichen Hilfsprogrammen z. B. in PDFs, html-Seiten oder docx-Dateien umgewandelt werden.
+In einem RMardown-Dokument kann man Text und Code in sogenannten "Code-Chunks" schreiben und bei der Umwandlung wird der Code ausgeführt, d. h. es erscheinen die Graphiken. Es ist sehr praktisch, wenn man alle wichtigen Informationen zusammen haben möchte. In RMarkdown lassen sich auch Zitationen automatisieren (über zotero, csl und bib-Datei). Es gibt neben Textdokumenten auch die Möglichkeit, websites, Präsentationen und Poster zu erstellen.
+
+- Pakete: rmarkdown, knitr
+- The Definitive Guide: https://bookdown.org/yihui/rmarkdown/
+- offizielle website: https://rmarkdown.rstudio.com/index.html
+
+
+### rrtools:
+
+Genau wie man Pakete mit Funktionen herunterladen kann, lassen sich auch eigene Projekte als R-Paket speichern. Damit man Text, selbstgeschriebene Funktionen und Daten in einem Paket zusammen hat, erstellt rrtools (reproducible research tools) eine Ordnerstruktur und legt ein template-paper (als RMardown-Dokument) an. Diese Paket kann man a) anderen Leuten zur Verfügung stellen, die damit alles haben, um die Forschung zu reproduzieren und/oder b) hervorragend mit git und github verknüpfen, um eine ordentliche Versionskontrolle zu gewährleisten.
+
+- Pakete: rrtools, rrtools.addin
+- https://github.com/benmarwick/rrtools 
+- https://github.com/nevrome/rrtools.addin (GUI für rrtools)
 
 
 
 
 
-## Hilfestellungen					      15min
+## Hilfestellungen					      
 1. Hilfe-Funktion in R
 2. Ben Marwicks page
 3. Data Science Buch
