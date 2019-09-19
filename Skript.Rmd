@@ -39,9 +39,7 @@ R selber hat keine schöne Benutzeroberfläche, sondern wird von der Konsole aus
 ## Einführung in die Grundlagen			
 R ist eine objektorientierte Sprache. Das heißt, alles ist in R entweder ein Objekt oder eine Funktion. Eine Funktion "macht" immer etwas mit einem Objekt. Wie im Mathe-Unterricht: f(x) = 2*x rechnet für jedes x den zugehörigen Wert (y) aus, der genau das Doppelte von x ist. Nur können die Funktionen in R deutlich komplizierter werden... 
 
-Die Funktionen sind in Paketen gespeichert, die sich auf einander beziehen: Wenn in Paket A eine Funktion f(x) liegt, in der die Funktion g(x) aus Paket B benutzt wird, besteht eine Abhängigkeit (*dependency*) von Paket A zu Paket B. Installiere ich Paket A, wird in der Regel automatisch Paket B mitinstalliert, damit ich die Funktion f(x) auch wirklich benutzen kann. Manchmal kommen aber trotzdem Fehlermeldungen wie "error: could not find function", dann kann es sein, dass eine *dependency* nicht mitinstalliert wurde ODER nicht geladen wurde. Denn: Wenn  wir Funktionen aus einem Paket brauchen, müssen wir es installieren und jedesmal, wenn wir es benutzen, am Anfang einer R-Sitzung laden (mit der "library" oder "require"-Funktion, Beispiele später). Die wichtigsten Funktionen sind in R "base" vorinstalliert. Manchmal haben Funktionen in unterschiedlichen Paketen den gleichen Namen. Dann gibt R eine Warnung aus, "objects are masked", d.h. die Funktionen des neu geladenen Pakets "überschreiben" die alten. Nicht irritieren lassen, meistens interessiert uns das nicht.
-
-Man kann in R auch selber Funktionen schreiben, das führt für den Workshop aber zu weit. 
+Die Funktionen sind in Paketen gespeichert, die sich auf einander beziehen: Wenn in Paket A eine Funktion f(x) liegt, in der die Funktion g(x) aus Paket B benutzt wird, besteht eine Abhängigkeit (dependency) von Paket A zu Paket B. Installiere ich Paket A, wird in der Regel automatisch Paket B mitinstalliert, damit ich die Funktion f(x) auch wirklich benutzen kann. Manchmal kommen aber trotzdem Fehlermeldungen wie "error: could not find function", dann kann es sein, dass eine dependency nicht mitinstalliert wurde ODER nicht geladen wurde. Denn: Wenn  wir Funktionen aus einem Paket brauchen, müssen wir es installieren und jedesmal, wenn wir es benutzen, am Anfang einer R-Sitzung laden (mit der *library* oder *require*-Funktion, Beispiele später). Die wichtigsten Funktionen sind in R "base" vorinstalliert. Manchmal haben Funktionen in unterschiedlichen Paketen den gleichen Namen. Dann gibt R eine Warnung aus, "objects are masked", d.h. die Funktionen des neu geladenen Pakets "überschreiben" die alten. Nicht irritieren lassen, meistens interessiert uns das nicht.
 
 Funktionen erkennt man daran, dass hinter dem Funktionsbefehl oder -namen in runden Klammern die Objekte stehen, auf die die Funktion angewandt wird sowie Parameter, wie diese Funktion angewandt werden soll. Ein einfaches Beispiel: 
 
@@ -152,7 +150,7 @@ a <- "Hund"
 b <- "Katze"
 ```
 
-Die Hochkommas erklären R, dass es sich um Text handelt und nicht um Objekte (also andere Variablen). Vergisst man sie, kommt die Fehlermeldung "object "Hund" not found", weil R nach etwas, das "Hund" heißt, sucht und nicht findet.
+Die Hochkommas erklären R, dass es sich um Text handelt und nicht um Objekte (also andere Variablen). Vergisst man sie, kommt die Fehlermeldung "object 'Hund' not found", weil R nach etwas, das 'Hund' heißt, sucht und nicht findet.
 
 Jetzt lassen sich diese beiden in einen Vektor zusammengefügt:
 ```{r}
@@ -174,10 +172,10 @@ View(df)
 
 Cool! Wir haben Daten!
 
-Aber eigentlich wollten wir archäologische Daten benutzen. Netterweise gibt es Menschen, die eine Menge archäologischer Daten als R-Paket zusammengeschnürt haben und zur Verfügung gestellt haben (David L. Carlson und Georg Roth). Installieren wir also das erste Paket! Der Befehl ist "install.packages" und das Paket heißt "archdata":
+Aber eigentlich wollten wir archäologische Daten benutzen. Netterweise gibt es Menschen, die eine Menge archäologischer Daten als R-Paket zusammengeschnürt haben und zur Verfügung gestellt haben (David L. Carlson und Georg Roth). Installieren wir also das erste Paket! Der Befehl ist *install.packages* und das Paket heißt "archdata":
 
 ```{r}
-#install.packages("archdata")
+install.packages("archdata")
 ```
 
 Nach erfolgreicher Installation (roter Text heißt in R nicht, dass Fehler passiert sind!), müssen wir das Paket noch in unsere Sitzung laden, damit wir damit umgehen können:
@@ -202,6 +200,7 @@ data("BACups")
 
 Eigene Datensätze lassen sich am leichtesten als csv, aber auch als excel-Datei in R laden. R kann man auch mit Datenbanken verbinden und es gibt inzwischen Pakete, die PDF-Tabellen für einen auslesen. Infos dazu gibt's am Ende.
 
+Wir sollten uns den Datensatz aber vorher einmal kurz angucken. Wie ging das noch einmal?
 
 
 ## Lagemaße u. ä.
@@ -209,11 +208,12 @@ Diesen Datensatz können wir jetzt schon einmal erkunden. Zum Beispiel uns die e
 
 - $  das Dollarzeichen steht zwischen Dataframe und dem Vector im Dataframe: df\$vector, damit wählen wir also den Vector ("die Spalte") an.
 
+
 ```{r}
 BACups$Phase 
 ```
 
-Was R mir jetzt einfach "ausspuckt" ist die Abfolge der Werte, die in der Tabellenspalte "Phase" stehen, wobei die Zahlen in eckigen Klammern die Positionen markieren. Außerdem sagt er mir wie viele "levels" der Vektor hat, also wie viele unterschiedliche Werte und wie diese heißen: Protoappenin und Subappenin. 
+Was R mir jetzt einfach "ausspuckt" ist die Abfolge der Werte, die in der Tabellenspalte "Phase" stehen, wobei die Zahlen in eckigen Klammern die Positionen markieren. Außerdem sagt er mir wie viele "levels" der Vektor hat, also wie viele unterschiedliche Werte und wie diese heißen: Protoappenine und Subappenine. 
 
 
 Tun wir das gleiche für einen numerischen Vektor:
@@ -229,7 +229,7 @@ Was ist der Mittelwert?
 ```{r}
 RD_mean <- mean(BACups$RD) 
 ```
-Du Funktion "mean" wird auf die Spalte "RD" des Dataframes "BACups" angewandt. 
+Du Funktion *mean* wird auf die Spalte "RD" des Dataframes "BACups" angewandt. 
 
 Und der Median?
 ```{r}
@@ -262,8 +262,6 @@ summary(BACups$RD)
 ```
 Nunja, zumindest Minimal- und Maximalwerte, Median, Mittelwert und Quantile lassen sich so auf einen Blick anzeigen.
 
-
-
 ### Bestimmte Bereiche eines Datensatzes auswählen
 
 - Eckige Klammern [ ]: Sie sind spannend, weil man mit ihnen Zeilen, Spalten und Felder eines Dataframes anwählen kann. Ein kleines Beispiel:
@@ -274,6 +272,7 @@ Will ich in dem Datensatz BACups zB die allererste Information (1. Zeile, 1. Spa
 
 BACups_1_1 <- BACups[1,1]
 ```
+
 Wie check ich, ob es geklappt hat? Richtig, oben rechts unter "Environment" steht jetzt BACups_1_1.
 
 Ich kann aber auch die gesamte erste Zeile auslesen:
@@ -290,6 +289,7 @@ Natürlich lassen sich auch Spalten auswählen, hier die erste:
 
 BACups_x_1 <- BACups[,1]
 ```
+
 Folgerichtig kann man sich merken: In der eckigen Klammer hinter dem Datensatz kann man mit der ersten Zahl die Zeile bestimmen und mit der zweiten Zahl hinter einem Komma die Spalte. Gerade Spalten haben häufig Namen, die kann man für die Auswahl auch nutzen. Aber dazu kommt später noch ein Beispiel.
 
 Negativauswahl gibt es natürlich auch. Also: Gib mir alles außer diese Spalte:
@@ -297,6 +297,7 @@ Negativauswahl gibt es natürlich auch. Also: Gib mir alles außer diese Spalte:
 ```{r Daten auswählen 4}
 BACups_vieles <- BACups[, -2]
 ```
+
 Alles außer Spalte 2 ist jetzt dem neuen Datensatz BACups_vieles zugewiesen worden
 
 
@@ -305,11 +306,12 @@ Ganz toll ist auch die Auswahlmöglichkeit "von a bis x". Das geht mit Doppelpun
 ```{r Daten auswählen 5}
 BACups_x <- BACups[c(10:20),]
 ```
+
 Schaut euch an, was entstanden ist. Alles klar?
 
 Wie oben, hab ich dem Programm mit c() gesagt, dass die Werte zusammengehören. Mit Doppelpunkt sage ich dann vom 10. bis zum 20. Wert. Da die Zahlen VOR dem Komma sind, erklär ich R, dass ich gern die Zeilen ausgewählt hätte.
 
-Häufig brauchen wir aber nicht irgendwelche 1. Zeile oder 2. Reihe, sondern alle Einträge mit einem bestimmten Wert. z. B. nur die protoappeninen bronzezeitlichen Tassen. Hier insbesondere führen viele Wege nach Rom:
+Häufig brauchen wir aber nicht irgendwelche 1. Zeile oder 2. Reihe, sondern alle Einträge mit einem bestimmten Wert. z. B. nur die protoappeninen bronzezeitlichen Tassen. Hier führen viele Wege nach Rom:
 
 
 ## Daten auswählen
@@ -317,9 +319,9 @@ Häufig brauchen wir aber nicht irgendwelche 1. Zeile oder 2. Reihe, sondern all
 Wie ist also der Mittelwert des Randdurchmessers nur von protoappeninen bronzezeitlichen Tassen? 
 Dafür (wie so für so vieles) gibt es unterschiedliche Wege in R. Schauen wir uns zwei kurz an: 
 
-1. subset:
+1. *subset*:
 
-Diese Funktion gehört zu base R. Ich erstelle einen neuen Datensatz, der besteht aus dem alten Datensatz, da wo in der Spalte Phase genau (Operator "==") "Protoappenine" steht:
+Diese Funktion gehört zu base R. Ich erstelle einen neuen Datensatz, der besteht aus dem alten Datensatz, da wo in der Spalte Phase genau (Operator "==") "Protoappenine" steht. Ich hab den Code mal kommentiert: 
 
 ```{r}
 # erstellen eines neuen Datensatzes nur der protoappeninen Tassen
@@ -329,9 +331,9 @@ BACups_proto <- subset(BACups, BACups$Phase == "Protoapennine")
 mean(BACups_proto$RD)
 ```
 
-2. filter
+2. *filter*
 
-Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "pipe". Mit dem Befehl %>% wird das Ergebnis einer Zeile in die nächste überführt. 
+Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "*pipe*". Mit dem Befehl %>% wird das Ergebnis einer Zeile in die nächste überführt. 
 
 Im Beispiel schicke ich damit den gesamten Datensatz BACups in den Filter, der in der nächsten Zeile beschrieben wird, "filtere" ihn und schick ihn gefiltert weiter in die nächste Zeile, in der ich die Spalte definiere und in die letzte, wo es dann um die Berechnung des Mittelwertes geht:
 
@@ -354,6 +356,33 @@ Wie man sieht, ist der "Kernbefehl" (" Phase == "Protoapennine" ") fast genau gl
 BACups_protapp <- BACups %>%
   filter(Phase == "Protoapennine")
 ```
+
+
+## Funktionen schreiben
+
+Wir haben jetzt schon Funktionen angewandt. Man kann sich in R aber auch Funktionen selber definieren. Die Syntax dafür ist immer gleich:
+
+myfunction <- function(x) {
+das wird mit x passieren
+}
+
+Die neue Funktion heißt "myfunction", sie wird auf eine Variable x angewandt und was mit x passiert, wird in den geschweiften Klammern definiert. Stellen wir uns vor, ich möchte eine Funktion für die Berechnung des doppelten Mittelwertes. Die könnte z. B. so aussehen:
+
+```{r}
+zwei_m <- function(x){
+  2*sum(x)/length(x)
+  }
+```
+Ich rechne zwei mal die Summe von x (d.h. x muss ein Vektor sein) und teile dies durch die Länge des Vektors (Anzahl der Einträge). Ich nenne die Funktion zwei_m.
+
+zwei_m kann ich jetzt anwenden:
+
+```{r}
+zwei_m(BACups$RD)
+```
+
+Es heißt, wenn man eine Abfolge von Berechnungen mehr als 3mal benutzt, sollte man sie in eine Funktion packen, damit man den Code nicht immer kopieren und einfügen muss. Außerdem kann man so Fehler vermeiden, weil man nur noch die Funktion aufrufen muss und nicht mehr den ganzen Code wiederholen.
+
 
 
 Beides funktioniert gleichermaßen gut.
@@ -388,19 +417,20 @@ Alles andere danach sind reine Verschönerungsmaßnahmen. Mit "scales" lassen si
 Nehmen wir uns ein Beispiel vor und erarbeiten es uns der Reihe nach.
 
 
-# ein Säulendiagramm
+# Ein Säulendiagramm
 Ein Säulendiagramm eignet sich zur Darstellung nominaler und ordinaler Variablen. Ihr könnt es ja mal mit metrischen Probieren, dann seht ihr schnell, warum das nicht gut ist.
 
-Als erstes müssen wir das Paket ggplot2 installieren (install.packages) und aufrufen
+Als erstes müssen wir das Paket ggplot2 installieren (*install.packages*) und aufrufen
+
 ```{r}
 library(ggplot2)
 ```
 
-Dann bauen wir ein erstes einfaches Säulendiagramm. Der Befehl für diese Art des Diagramms ist "geom_bar". 
+Dann bauen wir ein erstes einfaches Säulendiagramm. Der Befehl für diese Art des Diagramms ist *geom_bar*. 
 
-Die Information "data = " kann entweder direkt in die runden Klammern hinter ggplot() geschrieben werden ODER dem geom_bar hinzugefügt. 
+Die Information *data = * kann entweder direkt in die runden Klammern hinter ggplot() geschrieben werden ODER dem geom_bar hinzugefügt. 
 
-Wie aber soll das Säulendiagramm (geom_bar) aussehen, welche Spalte des Datensatzes soll genau wie dargestellt werden? Das ist die Information die in aes() eingegeben werden muss.
+Wie aber soll das Säulendiagramm (geom_bar) aussehen, welche Spalte des Datensatzes soll genau wie dargestellt werden? Das ist die Information die in *aes()* eingegeben werden muss.
 
 Wir möchten jetzt also ein Säulendiagramm bauen, dass auf der x-Achse die verschiedenen Phasen des BACups-Datensatzes und die Häufigkeiten (wie viele Datensätze aus den verschiedenen Phasen gibt es) auf der y-Achse zeigt:
 
@@ -423,7 +453,7 @@ ggplot()+
        title = "Vorkommen der zwei Phasen")
 ```
 
-Oder die Säulen bunt einfärben. Der Befehl fill gibt den Balken unterschiedliche Farben, je nach den Angaben in der Spalte, die ich spezifiziere (hier wieder Phase):
+Wir können auch die Säulen bunt einfärben. Der Befehl *fill* gibt den Balken unterschiedliche Farben, je nach den Angaben in der Spalte, die ich spezifiziere (hier wieder Phase):
 
 ```{r erstes Säulendiagramm und jetzt bunt!}
 ggplot()+ 
@@ -433,7 +463,7 @@ ggplot()+
 
 ```
 
-Oder einen anderen Look wählen (ein anderes Thema. Es gibt theme_classic, theme_grey, theme_minimal und theme_bw): 
+Oder einen anderen Look wählen (ein anderes Thema. Es gibt *theme_classic, theme_grey, theme_minimal* und *theme_bw*): 
 
 ```{r erstes Säulendiagramm mit anderem Thema}
 ggplot(data = BACups)+ 
@@ -459,13 +489,11 @@ ggplot(data = EndScrapers)+
 
 ```
 
-
-
 # Streudiagramme
 
-Bei Streudiagrammen kann ich zwei Variablen einer Einheit gegeneinander plotten.
+Bei Streudiagrammen kann ich zwei Variablen gegeneinander plotten.
 
-Wir tragen auf der X- und auf der Y-Achse metrische Daten ab. Das gehört zu den aesthetics-Elementen, deshalb tun wir die Info in die Klammern hinter aes(): 
+Wir tragen auf der X- und auf der Y-Achse metrische Daten ab. Das gehört zu den aesthetics-Elementen, deshalb tun wir die Info in die Klammern hinter *aes()*: 
 
 ```{r Streudiagramm basics}
 
@@ -489,7 +517,7 @@ ggplot(data = BACups)+
 Was kann man noch tolles machen? 
 Wie wäre es mit einer Linearen Regression?
 
-Dafür fügen wir dem bestehenden Plot ein Layer hinzu. Der Befehl für Regressionslinien ist geom_smooth und wir benutzen die Methode "linear model" (lineare Regression), abgekürzt "lm" (es gibt noch mehr...). Mit "se" kann man den "standard error" hinzufügen (se = TRUE) oder nicht (se = FALSE). 
+Dafür fügen wir dem bestehenden Plot ein Layer hinzu. Der Befehl für Regressionslinien ist geom_smooth und wir benutzen die Methode "linear model" (lineare Regression), abgekürzt "lm" (es gibt noch mehr...). Mit *se* kann man den "standard error" hinzufügen (*se = TRUE*) oder nicht (*se = FALSE*). 
 
 ```{r}
 ggplot(data = BACups)+
@@ -508,7 +536,7 @@ ggplot(data = BACups)+
 Was geht noch? 
 Die Form und Farbe der Punkte von einer Variablen bestimmen lassen! 
 
-Welches Merkmal, das ich in der Tabelle als Spalte aufgenommen habe die Form der Punkte bestimmt lege ich mit "shape" fest, die Farbe mit "color".
+Welches Merkmal, das ich in der Tabelle als Spalte aufgenommen habe die Form der Punkte bestimmt lege ich mit *shape* fest, die Farbe mit *color*.
 
 
 ```{r Streudiagramm mit schönen Punkten}
@@ -525,10 +553,14 @@ ggplot(data = BACups)+
 
 Form und Farbe kann man natürlich auch von unterschiedlichen Parametern bestimmen lassen. Da diese Eigenschaften jedoch nominaler Art sein sollten und wir keinen zweiten nominale Variable in dem BACups-Datensatz haben, benutzen wir doch mal einen anderen. 
 
-Die Snodgrass-Daten beinhalten "Information on the size, location and contents of 91 house pits at the Snodgrass site which was occupied between about CE 1325-1420". 
+Die Snodgrass-Daten beinhalten "Information on the size, location and contents of 91 house pits at the Snodgrass site which was occupied between about CE 1325-1420". Ich schlag vor, ihr ladet ihn und schaut ihn euch kurz an:
+
+```{r Snodgrass}
+data("Snodgrass")
+View(Snodgrass)
+```
 
 ```{r Streudiagramm mit anderem Bsp}
-data("Snodgrass")
 
 ggplot(data = Snodgrass)+
   geom_point(aes(x = Width, y = Length, shape = Segment, color = Inside))+ 
@@ -555,52 +587,60 @@ ggplot(data = Snodgrass)+
  scale_colour_discrete(name = "Innerhalb der Mauer oder nicht",
                             breaks = c("Inside","Outside"),
                             labels = c("innerhalb", "außerhalb")) +
-    scale_shape_discrete(name  ="Grabungsareal",
+scale_shape_discrete(name  ="Grabungsareal",
                            breaks = c("1","2","3"),
                            labels = c("Areal 1", "Areal 2", "Areal 3"))
 ```
 Was bedeutet das alles?
 
-Mit scale_colour_discrete kann ich Legenden (scales) verändern, die mit "color" innerhalb des aesthetics-Bereichs meines Codes für die Graphik definiert werden und die DISKRET sind (also v.a. nominale / ordinale Daten).
+Mit *scale_colour_discrete* kann ich Legenden (*scales*) verändern, die mit *color* innerhalb des aesthetics-Bereichs meines Codes für die Graphik definiert werden und die DISKRET sind (also v.a. nominale / ordinale Daten).
 
-Hier benenne ich den Legendentitel mit "name = " um.
+Hier benenne ich den Legendentitel mit *name = * um.
 
-"breaks" bezeichnet die Werte in meiner Spalte, die dann mit den "labels" in der nächsten Zeile umbenannt werden.
+*breaks* bezeichnet die Werte in meiner Spalte, die dann mit den *labels* in der nächsten Zeile umbenannt werden.
 
-Das gleiche kann ich mit der Legende für die FORM der Punkte machen: scale_shape_discrete.
+Das gleiche kann ich mit der Legende für die FORM der Punkte machen: *scale_shape_discrete*.
 
 Voll gut! 
 
 ## Facettierung!
 
-Jetzt wird es nochmal richtig cool. Der Dichteplot eben, den nochmal nach unterschiedlichen Phasen anzulegen, das wär gut oder?
+Jetzt wird es nochmal richtig cool. 
 
-```{r density facettieren, fig.height= 8, fig.width = 8}
-library(tidyr)
-BACups%>%
-  gather(key = "Durchmesser", value = "Wert", "RD", "ND","SD") %>%
-  ggplot()+
-  geom_density(aes(x = Wert, col= Durchmesser))+
-  facet_grid(.~Phase)
-```
-Nur eine einzige Zeile Code mehr und schaut es euch an: Interessantes Ergebnis oder? Die ganzen hohen Durchmesser-Werte kommen fast alle aus der subappeninen Phase. Interessant!
+Mit der Facettierung kann man ein oder zwei weitere Variablen auswählen, die den Datensatz unterteilen und in unterschiedlichen, aber gleich skalierten!, Graphiken darstellen. Es gibt zwei Möglichkeiten: *facet_grid()* und *facet_wrap()*. In beiden kann man ein bis zwei Variablen definieren, mit denen die Graphiken unterteilt werden. Während bei *facet_grid* immer alle Graphiken angezeigt werden, auch wenn sie leer sind, werden bei *facet_wrap* nur die angezeigt, in denen Daten vorkommen.
 
-Noch ein anderes Bsp fürs Facettieren. Nehmen wir doch mal den Snodgrass-Datensatz mit den Häusern. Da gibt es zwei nominale Attribute, die man bei der "Facettierung" geenüber stellen kann.
+Vielleicht ein kleines Bsp: Im Snodgrass-Datensatz wollen wir die Breite und Länge der Häuser darstellen. Wir unterteilen die Plots aber danach, ob die Häuser innerhalb oder außerhalb der Mauer sind und danach, wie viele Figürinchen (effigies) in den Häusern gefunden wurden. Die Variablen, nach denen facettiert wird, werden mit ~ voneinander getrennt:
 
-Achja. Und ich benutz mal alle Variablen eines Streudiagramms, die mir einfallen... Versucht mal durchzublicken.
-
-```{r facettieren2, fig.height= 8, fig.width = 8}
-data("Snodgrass")
-
+```{r}
 ggplot(data = Snodgrass)+
-  geom_point(aes(x = Width, y = Length, col= Discs , shape = as.character(Effigies), size = Ceramics))+
-  facet_grid(Inside~Segment)
-# Was passiert hier alles?
+  geom_point(aes(x = Width, y = Length))+
+  facet_grid(Inside~Effigies)
 ```
 
-## Last comments
+Wie man sieht, gibt es einige Plots, die leer sind. *facet_wrap* bricht die rigide Gitterstruktur auf und zeigt nur die plots, die auch Daten beinhalten:
 
-GGplot hat noch viel viel mehr Möglichkeiten. Um einen Überblick zu bekommen, empfehle ich den Blogpost hier zu lesen, der vorführt, wie sich so eine Visualisierung entwickeln kann und am Ende richtig richtig gut aussieht:
+```{r}
+ggplot(data = Snodgrass)+
+  geom_point(aes(x = Width, y = Length))+
+  facet_wrap(Inside~Effigies)
+```
+
+Sehr praktisch ist auch die Möglichkeit, hier die Variablen noch genauer zu spezifizieren. z.B. möchte ich gern nicht die genaue Anzahl von Figurinen, sondern nur ob es überhaupt welche in einem Haus gibt oder nicht der Information gegenüber stellen, ob sich das Haus innerhalb oder außerhalb der Mauer befindet: 
+
+```{r}
+library(sp)
+coordinates(Snodgrass$East, Snodgrass$South)
+ggplot(data = Snodgrass)+
+  geom_point(aes(x = Width, y = Length))+
+  facet_grid(Inside~Effigies > 0)
+
+```
+
+
+
+## Weiterführendes zu ggplot
+
+ggplot hat noch viel viel mehr Möglichkeiten. Um das vorgeführt zu bekommen, empfehle ich den Blogpost hier zu lesen, der zeigt, wie sich so eine Visualisierung entwickeln kann und am Ende richtig richtig gut aussieht:
 https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/
 
 Hilfen, um mit ggplot zurechtzukommen sind: 
@@ -608,6 +648,31 @@ Hilfen, um mit ggplot zurechtzukommen sind:
 - die Schummelzettel: https://www.rstudio.com/wp-content/uploads/2015/06/ggplot2-german.pdf 
 
 - dieses R-Intro-Buch: https://r-intro.tadaa-data.de/book/visualisierung.html
+
+- das englische R-Cookbook: http://www.cookbook-r.com/ 
+
+
+
+
+## weitere spannende Dinge in R:
+
+Mit R kann man auch alle möglichen räumlichen Analysen machen. Man kann shape-files und raster-Daten bearbeiten. Ein kleines Beispiel, wie man eine einfache Karte plotten kann, lässt sich an dem Snodgrass-Datensatz zeigen
+
+```{r}
+ggplot()+
+  geom_point(data = Snodgrass, aes(x = East, y = South))
+```
+
+
+
+- Rmarkdown: Text und Code in einem Dokument
+dazu:
+- The Definitive Guide: https://bookdown.org/yihui/rmarkdown/
+- offizielle website: https://rmarkdown.rstudio.com/index.html
+
+- sp, sf, spatstat, maptools: Pakete für räumliche Analysen
+
+- rrtools: Projekt als R-Paket abspeichern (Text, Code und Daten in einem)
 
 
 ## eigene Daten einladen
@@ -633,16 +698,6 @@ mydata <- read.xlsx("Pfad/zur/Datei/meineDatei.xlsx", sheet = 1)
 
 
 
-
-## weitere spannende Dinge in R:
-- Rmarkdown: Text und Code in einem Dokument
-dazu:
-- The Definitive Guide: https://bookdown.org/yihui/rmarkdown/
-- offizielle website: https://rmarkdown.rstudio.com/index.html
-
-- sp, sf, spatstat, maptools: Pakete für räumliche Analysen
-
-- rrtools: Projekt als R-Paket abspeichern (Text, Code und Daten in einem)
 
 ## Hilfestellungen					      15min
 1. Hilfe-Funktion in R
