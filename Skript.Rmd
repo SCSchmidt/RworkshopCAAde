@@ -78,7 +78,7 @@ Mit dem # Hashtag kommentiere ich Text aus. D. h. der Text wird nicht als Code b
 
 Deswegen sollten wir alle in die oberste Zeile schreiben, was das für eine Datei ist und wer sie erstellt hat.
 
-Die Skriptdatei ist eine einfache Textdatei, die die Dateiendung .R besitzen. Das Format .RData (oder kurz .Rda) wird verwendet, um ein R-Objekt, beispielsweise einen Datensatz, oder eine Kollektion von R-Objekten, also Daten und Funktionen, im R internen binären serialisierten Format abzuspeichern, wobei diese Dateien zusätzlich standard-komprimiert sind. Die gesamte Arbeitsumgebung kann so ebenfalls als .RData-Datei gespeichert werden. 
+Die Skriptdatei ist eine einfache Textdatei, die die Dateiendung .R besitzen. Das Format .RData (oder kurz .Rda) wird verwendet, um ein R-Objekt, beispielsweise einen Datensatz, oder eine Kollektion von R-Objekten, also Daten und Funktionen, im R internen Format abzuspeichern. Die gesamte Arbeitsumgebung kann so ebenfalls als .RData-Datei gespeichert werden. 
 
 Der in einem Skript geschriebene Code wird nicht automatisch sofort ausgeführt, sondern die Ausführung muss beauftragt werden, in dem man ihn mit Strg + ENTER zur Konsole sendet. Was in die Konsole eingetippt wird, wird sofort durch ENTER ausgeführt.
 
