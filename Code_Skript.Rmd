@@ -1,13 +1,14 @@
 ---
-title: "Code-Skript R Workshop @ CAA de 2019"
+title: "Code-Handout R Workshop @ CAA de 2019"
 author: "Sophie C. Schmidt"
 date: "4 September 2019"
 output: word_document
+template: template.docx
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      eval = FALSE)
+                      eval = TRUE)
 ```
 
 
@@ -98,7 +99,7 @@ Cool! Wir haben Daten!
 Aber eigentlich wollten wir archäologische Daten benutzen. Netterweise gibt es Menschen, die eine Menge archäologischer Daten als R-Paket zusammengeschnürt haben und zur Verfügung gestellt haben (David L. Carlson und Georg Roth). Installieren wir also das erste Paket! Der Befehl ist *install.packages* und das Paket heißt "archdata":
 
 ```{r}
-install.packages("archdata")
+#install.packages("archdata")
 ```
 
 Nach erfolgreicher Installation (roter Text heißt in R nicht, dass Fehler passiert sind!), müssen wir das Paket noch in unsere Sitzung laden, damit wir damit umgehen können:
@@ -521,9 +522,7 @@ Hier benenne ich den Legendentitel mit *name = * um.
 
 *breaks* bezeichnet die Werte in meiner Spalte, die dann mit den *labels* in der nächsten Zeile umbenannt werden.
 
-Das gleiche kann ich mit der Legende für die FORM der Punkte machen: *scale_shape_discrete*.
-
-Voll gut! 
+Das gleiche kann ich mit der Legende für die FORM der Punkte machen: *scale_shape_discrete*.   Voll gut! 
 
 ### Facettierung!
 
@@ -550,8 +549,6 @@ ggplot(data = Snodgrass)+
 Sehr praktisch ist auch die Möglichkeit, hier die Variablen noch genauer zu spezifizieren. z.B. möchte ich gern nicht die genaue Anzahl von Figurinen, sondern nur ob es überhaupt welche in einem Haus gibt oder nicht der Information gegenüber stellen, ob sich das Haus innerhalb oder außerhalb der Mauer befindet: 
 
 ```{r}
-library(sp)
-coordinates(Snodgrass$East, Snodgrass$South)
 ggplot(data = Snodgrass)+
   geom_point(aes(x = Width, y = Length))+
   facet_grid(Inside~Effigies > 0)
@@ -676,4 +673,5 @@ Es lassen sich online diverse Tutorials und Anleitungen finden. Hier eine Auswah
 - das englische R-Cookbook: http://www.cookbook-r.com/ 
 - Video-Tutorials von ISAAK: https://isaakiel.github.io/screencasts.html 
 - ...
+- Dieses Tutorial ist online unter: https://github.com/SCSchmidt/RworkshopCAAde
 
