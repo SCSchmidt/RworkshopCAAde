@@ -308,46 +308,6 @@ Es heißt, wenn man eine Abfolge von Berechnungen mehr als 3mal benutzt, sollte 
 
 
 
-Beides funktioniert gleichermaßen gut.
-
-
-### Option: Schleife schreiben (wenn noch Zeit ist)
-
-Mit Schleifen lassen sich Prozesse automatisieren und für mehrere Datensätze gleichzeitig durchführen. Es gibt "for", "while" und "repeat"-Schleifen. Als Beispiel betrachten wir hier nur die "for"-Schleife.
-
-Die Aufgabe für R ist immer "für jedes Element i in einem Vektor v tu das und das":
-
-for(i in v) {
-tu das hier
-}
-
-Nehmen wir als Beispiel den BACups-Datensatz und addieren jeden Wert mit 5 (meine Kreativität kennt keine Grenzen...):
-
-```{r}
-library(archdata)
-data(BACups)
-View(BACups)
-for (i in BACups) {
-  mean_i <- mean(i)
-  print(mean_i)
-}
-
-
-for (i in BACups$H) {
-  x <- i + 5
-  print(paste(i, x, sep = " : "))
-}
-
-```
-Der Print-Befehl ist wichtig, damit uns nicht nur das letzte Ergebnis angezeigt wird, sondern alle. Für die letzte Spalte bekommen wir eine Warnung: "Argument ist weder numerisch noch boolesch: gebe NA zurück[1] NA", weil dies die "Phase"-Spalte ist, in der keine numerischen Werte vorkommen und folglich kein Mittelwert berechnet werden kann.
-
-Nur zur Info: Die Aufgabe kann noch schneller gelöst werden:
-
-```{r}
-colMeans(BACups[sapply(BACups, is.numeric)])
-```
-
-
 
 # Pause							15min
 
