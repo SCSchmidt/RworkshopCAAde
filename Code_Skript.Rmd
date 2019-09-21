@@ -1,18 +1,18 @@
 ---
 title: "Code-Handout R Workshop @ CAA de 2019"
 author: "Sophie C. Schmidt"
-date: "4 September 2019"
+date: "23 September 2019"
 output: word_document
 template: template.docx
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      eval = TRUE)
+                      eval = FALSE)
 ```
 
 
-### Taschenrechner
+## Taschenrechner
 
 Man kann R wie einen Taschenrechner benutzen, die einfachen Rechenoperationen stehen zur Verfügung:
 
@@ -59,7 +59,13 @@ Mit x kann ich jetzt weiterrechnen:
 y <- x+2
 ```
 
-Da diese beiden Werte den gleichen Typ haben (*numeric*), kann ich sie in einem Vektor zusammenfassen:
+Mit dem Befehl *class* kann ich testen, welcher Datentyp eine Variable hat:
+```{r}
+class(x)
+class(y)
+```
+
+Da x und y den gleichen Typ haben (*numeric*), kann ich sie in einem Vektor zusammenfassen:
 
 ```{r}
 z <- c(x,y)
@@ -67,6 +73,9 @@ z <- c(x,y)
 Was ist passiert?
 
 Das c() markiert, dass ich mehrere Werte in einer Reihe eingebe, die zusammengehören sollen. Mit <- habe ich diese Reihe der Variablen z zugeordnet.
+
+
+
 
 Wenn ich das alles noch einmal mit anderen Werten mache, kann ich aus den zwei Vektoren einen Dataframe erstellen:
 ```{r}
@@ -96,10 +105,10 @@ View(df)
 
 Cool! Wir haben Daten!
 
-Aber eigentlich wollten wir archäologische Daten benutzen. Netterweise gibt es Menschen, die eine Menge archäologischer Daten als R-Paket zusammengeschnürt haben und zur Verfügung gestellt haben (David L. Carlson und Georg Roth). Installieren wir also das erste Paket! Der Befehl ist *install.packages* und das Paket heißt "archdata":
+Aber eigentlich wollten wir archäologische Daten für den Workshop benutzen. Netterweise gibt es Menschen, die eine Menge archäologischer Daten als R-Paket zusammengeschnürt haben und zur Verfügung gestellt haben (David L. Carlson und Georg Roth). Installieren wir also das erste Paket! Der Befehl ist *install.packages* und das Paket heißt "archdata":
 
 ```{r}
-#install.packages("archdata")
+install.packages("archdata")
 ```
 
 Nach erfolgreicher Installation (roter Text heißt in R nicht, dass Fehler passiert sind!), müssen wir das Paket noch in unsere Sitzung laden, damit wir damit umgehen können:
@@ -186,7 +195,7 @@ summary(BACups$RD)
 ```
 Nunja, zumindest Minimal- und Maximalwerte, Median, Mittelwert und Quantile lassen sich so auf einen Blick anzeigen.
 
-### Bestimmte Bereiche eines Datensatzes auswählen
+## Bestimmte Bereiche eines Datensatzes auswählen
 
 - Eckige Klammern [ ]: Sie sind spannend, weil man mit ihnen Zeilen, Spalten und Felder eines Dataframes anwählen kann. Ein kleines Beispiel:
 
@@ -257,7 +266,7 @@ mean(BACups_proto$RD)
 
 2. *filter*
 
-Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "*pipe*". Mit dem Befehl %>% wird das Ergebnis einer Zeile in die nächste überführt. 
+Die Filter-Funktion gehört zum sogenannten "tidyverse". Das Tidyverse ist wie ein bestimmter Dialekt von R. Eine Reihe von Paketen folgt diesem Dialekt und diese Pakete arbeiten besonders gut miteinander. Da diese neuen Pakete auch einiges vereinfachen, erfreuen sie sich zunehmender Beliebtheit und wenn man nach Lösungen googelt, findet man Anleitungen, die "tidy" Lösungen erklären. Im Tidyverse gibt es eine Besonderheit, die man kennen sollte: Die sogenannte "*pipe*". Mit dem Befehl %>% wird das Ergebnis einer Zeile in die nächste überführt. Wir benötigen zwei Pakete als nächstes: "dplyr" und "magrittr", die mit *install.packages* installiert werden müssen.
 
 Im Beispiel schicke ich damit den gesamten Datensatz BACups in den Filter, der in der nächsten Zeile beschrieben wird, "filtere" ihn und schick ihn gefiltert weiter in die nächste Zeile, in der ich die Spalte definiere und in die letzte, wo es dann um die Berechnung des Mittelwertes geht:
 
@@ -321,7 +330,7 @@ hist(BACups$RD)
 ```
 Auch in r-base kann man an den Graphiken noch viele Veränderungen vornehmen (sowohl an der Berechnung der Graphik als auch was Titel, Achsenbeschriftung und ähnliches angeht). Allerdings sind diese Graphiken nicht so elegant und ich selber arbeite mit ggplot: 
 
-## ggplot
+# ggplot
 
 ggplot2 ist ein Paket, dase von Hadley Wickham entwickelt wurde, und viele Funktionen zur Visualisierung von Daten bietet (für eine Übersicht und Inspirationen siehe z. B: http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html und https://www.r-graph-gallery.com/). Es folgt einer eigenen Logik, der "Grammatik der Diagramme" und gehört zum Tidyverse. Grundlegend ist eine Art "Layer-Konzept", dass ich mit jeder weiteren Zeile Code ein neues Layer zu dem Diagramm hinzufüge, wie bei der Bildbearbeitung mit Photoshop oder Gimp.
 
@@ -340,7 +349,7 @@ Alles andere danach sind reine Verschönerungsmaßnahmen. Mit "scales" lassen si
 Nehmen wir uns ein Beispiel vor und erarbeiten es uns der Reihe nach.
 
 
-### Ein Säulendiagramm
+## Säulendiagramme
 Ein Säulendiagramm eignet sich zur Darstellung nominaler und ordinaler Variablen. Ihr könnt es ja mal mit metrischen Probieren, dann seht ihr schnell, warum das nicht gut ist.
 
 Als erstes müssen wir das Paket ggplot2 installieren (*install.packages*) und aufrufen
@@ -412,7 +421,7 @@ ggplot(data = EndScrapers)+
 
 ```
 
-### Streudiagramme
+## Streudiagramme
 
 Bei Streudiagrammen kann ich zwei Variablen gegeneinander plotten.
 
@@ -524,7 +533,7 @@ Hier benenne ich den Legendentitel mit *name = * um.
 
 Das gleiche kann ich mit der Legende für die FORM der Punkte machen: *scale_shape_discrete*.   Voll gut! 
 
-### Facettierung!
+## Facettierung!
 
 Jetzt wird es nochmal richtig cool. 
 
@@ -557,7 +566,7 @@ ggplot(data = Snodgrass)+
 
 
 
-### Weiterführendes zu ggplot
+## Weiterführendes zu ggplot
 
 ggplot hat noch viel viel mehr Möglichkeiten. Um das vorgeführt zu bekommen, empfehle ich den Blogpost hier zu lesen, der zeigt, wie sich so eine Visualisierung entwickeln kann und am Ende richtig richtig gut aussieht:
 https://cedricscherer.netlify.com/2019/05/17/the-evolution-of-a-ggplot-ep.-1/
@@ -573,17 +582,17 @@ Hilfen, um mit ggplot zurechtzukommen sind:
 
 
 
-## eigene Daten einladen
+# eigene Daten einladen
 
 Je nachdem, wie die eigenen Daten gespeichert sind, benötigt man unterschiedliche Funktionen in R. Was base-r am einfachsten kann, ist eine csv-Datei einladen. Der Befehl dafür heißt "read.csv2" (eine Weiterentwicklung von read.csv). Mit diesem Befehl können wir auch spezifizieren, mit welchem Zeichen die Spalten voneinander getrennt wurden. Im Beispiel gebe ich an, dass eine Semikolon-getrennte Tabelle ist. Außerdem ist es ein deutscher Datensatz und der Dezimaltrenner ist das Komma: 
 
-```{r eval=FALSE, include=FALSE}
+```{r eval=FALSE, include=TRUE}
 mydata <- read.csv2("Pfad/zur/Datei/meineDatei.csv", sep = ";", dec = ",")
 ```
 
 Für Excel-Daten muss man ein eigenes Paket installieren. Ich empfehle "openxlsx". Hier kann ich z. B. spezifizieren, welches sheet in der Excel-Arbeitsmappe als Tabelle eingelesen werden soll:
 
-```{r eval=FALSE, include=FALSE}
+```{r eval=FALSE, include=TRUE}
 install.packages("openxlsx")
 library(openxlsx)
 
@@ -592,10 +601,10 @@ mydata <- read.xlsx("Pfad/zur/Datei/meineDatei.xlsx", sheet = 1)
 
 
 
-## weitere spannende Dinge in R:
+# weitere spannende Dinge in R:
 
 
-### räumliche Analysen
+## räumliche Analysen
 Mit R kann man auch alle möglichen räumlichen Analysen machen. Man kann shape-files und raster-Daten bearbeiten. Ein kleines Beispiel, wie man eine einfache Karte plotten kann, lässt sich an dem Arnhofen-Datensatz zeigen
 
 Man benötigt das Paket "spatstat". In dem Datensatz gibt es das Arbeitsgebiet (window) als Polygon, welches mit der Funktion *owin* zu dieser Art von Objekt übertragen wird. Ein point process pattern object besteht aus den x- und y-Daten sowie diesem window:
@@ -625,7 +634,7 @@ plot(density.ppp(app))
 - weitere Pakete für räumliche Analysen sind z. B.: sp, sf, maptools
 
 
-### R Markdown
+## R Markdown
 
 Markdown ist eine Auszeichnungssprache, die so einfach ist, dass sie menschenlesbar bleibt. Dokumente in Markdown können mit unterschiedlichen Hilfsprogrammen z. B. in PDFs, html-Seiten oder docx-Dateien umgewandelt werden.
 In einem RMardown-Dokument kann man Text und Code in sogenannten "Code-Chunks" schreiben und bei der Umwandlung wird der Code ausgeführt, d. h. es erscheinen die Graphiken. Es ist sehr praktisch, wenn man alle wichtigen Informationen zusammen haben möchte. In RMarkdown lassen sich auch Zitationen automatisieren (über zotero, csl und bib-Datei). Es gibt neben Textdokumenten auch die Möglichkeit, websites, Präsentationen und Poster zu erstellen.
@@ -635,7 +644,7 @@ In einem RMardown-Dokument kann man Text und Code in sogenannten "Code-Chunks" s
 - offizielle website: https://rmarkdown.rstudio.com/index.html
 
 
-### rrtools:
+## rrtools:
 
 Genau wie man Pakete mit Funktionen herunterladen kann, lassen sich auch eigene Projekte als R-Paket speichern. Damit man Text, selbstgeschriebene Funktionen und Daten in einem Paket zusammen hat, erstellt rrtools (reproducible research tools) eine Ordnerstruktur und legt ein template-paper (als RMardown-Dokument) an. Diese Paket kann man a) anderen Leuten zur Verfügung stellen, die damit alles haben, um die Forschung zu reproduzieren und/oder b) hervorragend mit git und github verknüpfen, um eine ordentliche Versionskontrolle zu gewährleisten.
 
@@ -647,7 +656,7 @@ Genau wie man Pakete mit Funktionen herunterladen kann, lassen sich auch eigene 
 
 
 
-## Hilfestellungen
+# Hilfestellungen
 
 Was mach ich, wenn ich eine Fehlermeldung bekomme?
 
@@ -660,7 +669,7 @@ Was mach ich, wenn ich eine Fehlermeldung bekomme?
 
 4. Ist vielleicht "weiter oben im Code" ein Fehler passiert, der dann als Folgefehler erst an dieser Stelle auffällt?
 
-5. googeln: Online gibt es viele Leute, die das gleiche Problem schon hatten. Beim googeln hilft es, den Paket- und den Funktionsnamen "mitzugoogeln". Da "R" als Buchstabe zu unspezifisch ist, gibt es außerdem https://rseek.org/ , eine Art "personalisiertes Google".
+5. googeln: Online gibt es viele Leute, die das gleiche Problem schon hatten. Beim googeln hilft es, den Paket- und den Funktionsnamen "mitzugoogeln". Da "R" als Buchstabe sehr unspezifisch ist, gibt es außerdem https://rseek.org/ , eine Art "personalisiertes Google".
 
 
 Es lassen sich online diverse Tutorials und Anleitungen finden. Hier eine Auswahl:
